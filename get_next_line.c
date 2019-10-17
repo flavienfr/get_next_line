@@ -6,7 +6,7 @@
 /*   By: froussel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 14:53:17 by froussel          #+#    #+#             */
-/*   Updated: 2019/10/17 17:36:39 by froussel         ###   ########.fr       */
+/*   Updated: 2019/10/17 17:40:51 by froussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,10 @@ int		is_line(char *str)
 {
 	int i;
 
-	i = 0;
-	while (str[i])
-	{
+	i = -1;
+	while (str[++i])
 		if (str[i] == '\n')
 			return (1);
-		i++;
-	}
 	return (0);
 }
 
