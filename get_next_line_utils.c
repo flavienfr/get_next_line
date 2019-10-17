@@ -6,18 +6,20 @@
 /*   By: froussel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 14:54:08 by froussel          #+#    #+#             */
-/*   Updated: 2019/10/15 11:20:43 by froussel         ###   ########.fr       */
+/*   Updated: 2019/10/17 17:37:32 by froussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strclen(const char *s, char c)
 {
 	size_t i;
 
+	if (!s)
+		return (0);
 	i = 0;
-	while (s[i])
+	while (s[i] && s[i] != c)
 		i++;
 	return (i);
 }
@@ -32,9 +34,9 @@ char	*ft_strjoin(char const *str1, char const *str2)
 		return (0);
 	len = 0;
 	if (str1)
-		len = ft_strlen(str1);
+		len = ft_strclen(str1, '\0');
 	if (str2)
-		len += ft_strlen(str2);
+		len += ft_strclen(str2, '\0');
 	if (!(res = malloc(sizeof(*res) * (len + 1))))
 		return (0);
 	beg = res;
@@ -46,29 +48,6 @@ char	*ft_strjoin(char const *str1, char const *str2)
 			*res++ = *str2++;
 	*res = '\0';
 	return (beg);
-}
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
-{
-	size_t i;
-	size_t j;
-
-	i = 0;
-	j = 0;
-	if (!src || !dst)
-		return (0);
-	while (src[i])
-		i++;
-	if (dstsize > 0)
-	{
-		while (src[j] && j < dstsize - 1)
-		{
-			dst[j] = src[j];
-			j++;
-		}
-		dst[j] = '\0';
-	}
-	return (i);
 }
 
 char	*ft_strdup(const char *s1)
@@ -97,7 +76,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	if (!(ps = malloc(sizeof(*ps) * (len + 1))))
 		return (0);
-	if (ft_strlen(s) < start)
+	if (ft_strclen(s, '\0') < start)
 		*ps = '\0';
 	else
 	{
