@@ -6,7 +6,7 @@
 /*   By: froussel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 14:54:08 by froussel          #+#    #+#             */
-/*   Updated: 2019/10/17 17:37:32 by froussel         ###   ########.fr       */
+/*   Updated: 2019/10/18 19:00:24 by froussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 size_t	ft_strclen(const char *s, char c)
 {
 	size_t i;
-
+	
 	if (!s)
 		return (0);
 	i = 0;
@@ -34,9 +34,9 @@ char	*ft_strjoin(char const *str1, char const *str2)
 		return (0);
 	len = 0;
 	if (str1)
-		len = ft_strclen(str1, '\0');
+		len = ft_strlen(str1);
 	if (str2)
-		len += ft_strclen(str2, '\0');
+		len += ft_strlen(str2);
 	if (!(res = malloc(sizeof(*res) * (len + 1))))
 		return (0);
 	beg = res;
@@ -52,7 +52,7 @@ char	*ft_strjoin(char const *str1, char const *str2)
 
 char	*ft_strdup(const char *s1)
 {
-	int		i;
+	size_t	i;
 	char	*ps;
 
 	i = 0;
@@ -60,9 +60,12 @@ char	*ft_strdup(const char *s1)
 		i++;
 	if (!(ps = malloc(sizeof(*ps) * (i + 1))))
 		return (0);
-	i = -1;
-	while (s1[++i])
+	i = 0;
+	while (s1[i])
+	{
 		ps[i] = s1[i];
+		i++;
+	}
 	ps[i] = '\0';
 	return (ps);
 }
@@ -76,7 +79,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	if (!(ps = malloc(sizeof(*ps) * (len + 1))))
 		return (0);
-	if (ft_strclen(s, '\0') < start)
+	if (ft_strlen(s) < start)
 		*ps = '\0';
 	else
 	{
