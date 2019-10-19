@@ -6,19 +6,18 @@
 /*   By: froussel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 14:53:17 by froussel          #+#    #+#             */
-/*   Updated: 2019/10/18 18:56:52 by froussel         ###   ########.fr       */
+/*   Updated: 2019/10/19 11:55:26 by froussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 int		get_next_line(int fd, char **line)
 {
 	static char	*str[100];
 	char		buff[BUFFER_SIZE + 1];
 	char		*new_str;
-	size_t		i;
+	int			i;
 
 	if (!line || fd < 0 || fd == 1 || fd == 2 || BUFFER_SIZE <= 0)
 		return (-1);
@@ -32,16 +31,10 @@ int		get_next_line(int fd, char **line)
 		if (is_line(str[fd]))
 			break ;
 	}
-	if (i < 0) 
+	if (i < 0)
 	{
 		(str[fd]) ? free(str[fd]) : 1;
 		return (-1);
-	}
-	if (!str[fd])
-	{
-		printf("ici\n");
-		(str[fd]) ? free(str[fd]) : 1;//*line = NULL;
-		return (0);
 	}
 	return (give_line(&str[fd], line));
 }
@@ -54,11 +47,8 @@ int		give_line(char **str, char **line)
 
 	i = 0;
 	s = *str;
-	if (!**str)//ici si EOF .?.
-	{
-		printf("here\n");
-		*line = ft_strdup("");//ou *line = NULL; ??
-	}
+	if (!*str || !**str)//EOF et str = NULL
+		*line = NULL;//*line = ft_strdup("");//ou *line = NULL; ??
 	else
 	{
 		len = ft_strclen(*str, '\n');
@@ -80,30 +70,3 @@ int		is_line(char *str)
 			return (1);
 	return (0);
 }
-/*
-int	read_content(int fd, char **str)
-{
-	while ((i = read(fd, buff, BUFFER_SIZE)) > 0)
-	{
-		buff[i] = '\0';
-		new_str = ft_strjoin(*str, buff);
-		if (*str)
-			free(*str);
-		*str = new_str;
-		if (is_line(*str)
-			break ;
-	}
-	if (i < 0) 
-	{
-		(str[fd]) ? free(str[fd]) : 1;
-		return (-1);
-	}
-	if (!str[fd])
-	{
-		printf("ici\n");
-		(str[fd]) ? free(str[fd]) : 1;//*line = NULL;
-		return (0);
-	}
-	return (1);
-}
-*/
