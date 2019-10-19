@@ -80,3 +80,30 @@ int		is_line(char *str)
 			return (1);
 	return (0);
 }
+/*
+int	read_content(int fd, char **str)
+{
+	while ((i = read(fd, buff, BUFFER_SIZE)) > 0)
+	{
+		buff[i] = '\0';
+		new_str = ft_strjoin(*str, buff);
+		if (*str)
+			free(*str);
+		*str = new_str;
+		if (is_line(*str)
+			break ;
+	}
+	if (i < 0) 
+	{
+		(str[fd]) ? free(str[fd]) : 1;
+		return (-1);
+	}
+	if (!str[fd])
+	{
+		printf("ici\n");
+		(str[fd]) ? free(str[fd]) : 1;//*line = NULL;
+		return (0);
+	}
+	return (1);
+}
+*/
