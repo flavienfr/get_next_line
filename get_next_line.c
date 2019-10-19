@@ -6,7 +6,7 @@
 /*   By: froussel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 14:53:17 by froussel          #+#    #+#             */
-/*   Updated: 2019/10/19 11:55:26 by froussel         ###   ########.fr       */
+/*   Updated: 2019/10/19 14:09:05 by froussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int		give_line(char **str, char **line)
 		free(s);
 		return (1);
 	}
-	free(s);
+	if (s)
+		free(s);
 	return (0);
 }
 
