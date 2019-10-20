@@ -6,7 +6,7 @@
 /*   By: froussel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 14:53:17 by froussel          #+#    #+#             */
-/*   Updated: 2019/10/19 17:34:28 by froussel         ###   ########.fr       */
+/*   Updated: 2019/10/20 13:56:30 by froussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		get_next_line(int fd, char **line)
 {
-	static char	*str[100];
+	static char	*str[1000];
 	char		buff[BUFFER_SIZE + 1];
 	char		*new_str;
 	int			i;
@@ -34,6 +34,7 @@ int		get_next_line(int fd, char **line)
 	if (i < 0)
 	{
 		(str[fd]) ? free(str[fd]) : 1;
+		*line = NULL;
 		return (-1);
 	}
 	return (give_line(&str[fd], line));
@@ -60,7 +61,10 @@ int		give_line(char **str, char **line)
 		return (1);
 	}
 	if (s)
-		free(s);
+	{
+		free(*str);
+		*str = NULL;
+	}
 	return (0);
 }
 
