@@ -6,11 +6,11 @@
 /*   By: froussel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 14:54:08 by froussel          #+#    #+#             */
-/*   Updated: 2019/10/23 16:37:15 by froussel         ###   ########.fr       */
+/*   Updated: 2019/10/26 12:09:12 by froussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strclen(const char *s, char c)
 {

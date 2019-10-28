@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: froussel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/12 14:54:47 by froussel          #+#    #+#             */
-/*   Updated: 2019/10/20 15:35:52 by froussel         ###   ########.fr       */
+/*   Created: 2019/10/20 17:25:13 by froussel          #+#    #+#             */
+/*   Updated: 2019/10/28 10:44:54 by froussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,13 @@
 
 int		get_next_line(int fd, char **line);
 int		give_line(char **str, char **line);
-size_t	isline_strclen(const char *str, char c, int who);
+int		free_all(char **str);
+int		ret(char *s, size_t len);
+int		is_line(char *str);
+size_t	ft_strclen(const char *s, char c);
+size_t	ft_strlen(const char *s);
 char	*ft_strjoin(char const *str1, char const *str2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strdup(const char *s1);
 
 #endif

@@ -6,38 +6,36 @@
 /*   By: froussel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 14:53:17 by froussel          #+#    #+#             */
-/*   Updated: 2019/10/20 13:56:30 by froussel         ###   ########.fr       */
+/*   Updated: 2019/10/28 11:14:21 by froussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 int		get_next_line(int fd, char **line)
 {
-	static char	*str[1000];
+	static char	*str;
 	char		buff[BUFFER_SIZE + 1];
 	char		*new_str;
 	int			i;
-
-	if (!line || fd < 0 || fd == 1 || fd == 2 || BUFFER_SIZE <= 0)
+	
+	if (!line || fd < 0 || BUFFER_SIZE <= 0)
 		return (-1);
 	while ((i = read(fd, buff, BUFFER_SIZE)) > 0)
 	{
 		buff[i] = '\0';
-		new_str = ft_strjoin(str[fd], buff);
-		if (str[fd])
-			free(str[fd]);
-		str[fd] = new_str;
-		if (is_line(str[fd]))
+		if (!(new_str = ft_strjoin(str, buff)))
+			return (free_all(&str));
+		if (str)
+			free(str);
+		str = new_str;
+		if (is_line(str))
 			break ;
 	}
 	if (i < 0)
-	{
-		(str[fd]) ? free(str[fd]) : 1;
-		*line = NULL;
-		return (-1);
-	}
-	return (give_line(&str[fd], line));
+		return (free_all(&str));
+	return (give_line(&str, line));
 }
 
 int		give_line(char **str, char **line)
@@ -49,22 +47,40 @@ int		give_line(char **str, char **line)
 	i = 0;
 	s = *str;
 	if (!*str || !**str)
-		*line = NULL;
+	{
+		if (!(*line = ft_strdup("\0")))
+			return (free_all(str));
+	}
 	else
 	{
 		len = ft_strclen(*str, '\n');
 		while (len > i)
 			i++;
-		*line = ft_substr(*str, 0, i);
-		*str = ft_substr(*str, i + 1, ft_strclen(*str, '\0'));
+		if (!(*line = ft_substr(*str, 0, i)))
+			return (free_all(&s));
+		if (!(*str = ft_substr(*str, i + 1, ft_strclen(*str, '\0'))))
+			return (free_all(&s));
+		return (ret(s, len));
+	}
+	free_all(str);
+	return (0);
+}
+
+int		free_all(char **str)
+{
+	(*str) ? free(*str) : 1;
+	*str = NULL;
+	return (-1);
+}
+
+int		ret(char *s, size_t len)
+{
+	if (s[len] == '\n')
+	{
 		free(s);
 		return (1);
 	}
-	if (s)
-	{
-		free(*str);
-		*str = NULL;
-	}
+	free(s);
 	return (0);
 }
 
