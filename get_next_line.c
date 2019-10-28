@@ -47,8 +47,11 @@ int		give_line(char **str, char **line)
 	s = *str;
 	if (!*str || !**str)
 	{
-		if (!(*line = ft_strdup("\0")))
-			return (free_all(str));
+		//if (!(*line = ft_strdup("\0")))
+		//	return (free_all(str));
+		/// cette partie, il faut toujour return 0, meme si *line malloc est echoé
+		*line = ft_strdup('\0');
+		return (0);
 	}
 	else
 	{
@@ -57,7 +60,8 @@ int		give_line(char **str, char **line)
 			i++;
 		if (!(*line = ft_substr(*str, 0, i)))
 			return (free_all(&s));
-		if (!(*str = ft_substr(*str, i + 1, ft_strclen(*str, '\0'))))
+//		if (!(*str = ft_substr(*str, i + 1, ft_strclen(*str, '\0'))))
+		if (!(*str = ft_substr(*str, i + 1, ft_strclen(*str, '\0') - i - 1)))
 			return (free_all(&s));
 		return (ret(s, len));
 	}
