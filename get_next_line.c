@@ -6,12 +6,11 @@
 /*   By: froussel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 14:53:17 by froussel          #+#    #+#             */
-/*   Updated: 2019/10/28 11:14:21 by froussel         ###   ########.fr       */
+/*   Updated: 2019/10/28 16:25:00 by froussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 int		get_next_line(int fd, char **line)
 {
@@ -19,9 +18,9 @@ int		get_next_line(int fd, char **line)
 	char		buff[BUFFER_SIZE + 1];
 	char		*new_str;
 	int			i;
-	
+
 	if (!line || fd < 0 || BUFFER_SIZE <= 0)
-		return (-1);
+		return (free_all(&str));
 	while ((i = read(fd, buff, BUFFER_SIZE)) > 0)
 	{
 		buff[i] = '\0';
@@ -68,8 +67,11 @@ int		give_line(char **str, char **line)
 
 int		free_all(char **str)
 {
-	(*str) ? free(*str) : 1;
-	*str = NULL;
+	if (*str)
+	{
+		free(*str);
+		*str = NULL;
+	}
 	return (-1);
 }
 
