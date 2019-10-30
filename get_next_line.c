@@ -6,20 +6,20 @@
 /*   By: froussel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 14:53:17 by froussel          #+#    #+#             */
-/*   Updated: 2019/10/28 16:25:00 by froussel         ###   ########.fr       */
+/*   Updated: 2019/10/30 11:18:29 by froussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		get_next_line(int fd, char **line)
+int			get_next_line(int fd, char **line)
 {
 	static char	*str;
 	char		buff[BUFFER_SIZE + 1];
 	char		*new_str;
 	int			i;
 
-	if (!line || fd < 0 || BUFFER_SIZE <= 0)
+	if (!line || fd < 0)
 		return (free_all(&str));
 	while ((i = read(fd, buff, BUFFER_SIZE)) > 0)
 	{
@@ -37,13 +37,11 @@ int		get_next_line(int fd, char **line)
 	return (give_line(&str, line));
 }
 
-int		give_line(char **str, char **line)
+static int	give_line(char **str, char **line)
 {
 	char	*s;
-	size_t	i;
 	size_t	len;
 
-	i = 0;
 	s = *str;
 	if (!*str || !**str)
 	{
@@ -53,11 +51,9 @@ int		give_line(char **str, char **line)
 	else
 	{
 		len = ft_strclen(*str, '\n');
-		while (len > i)
-			i++;
-		if (!(*line = ft_substr(*str, 0, i)))
+		if (!(*line = ft_substr(*str, 0, len)))
 			return (free_all(&s));
-		if (!(*str = ft_substr(*str, i + 1, ft_strclen(*str, '\0'))))
+		if (!(*str = ft_substr(*str, len + 1, ft_strlen(*str) - len - 1)))
 			return (free_all(&s));
 		return (ret(s, len));
 	}
@@ -65,7 +61,7 @@ int		give_line(char **str, char **line)
 	return (0);
 }
 
-int		free_all(char **str)
+static int	free_all(char **str)
 {
 	if (*str)
 	{
@@ -75,7 +71,7 @@ int		free_all(char **str)
 	return (-1);
 }
 
-int		ret(char *s, size_t len)
+static int	ret(char *s, size_t len)
 {
 	if (s[len] == '\n')
 	{
@@ -86,7 +82,7 @@ int		ret(char *s, size_t len)
 	return (0);
 }
 
-int		is_line(char *str)
+static int	is_line(char *str)
 {
 	while (*str)
 		if (*str++ == '\n')
