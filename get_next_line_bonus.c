@@ -6,7 +6,7 @@
 /*   By: froussel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/20 17:25:30 by froussel          #+#    #+#             */
-/*   Updated: 2019/10/30 11:28:57 by froussel         ###   ########.fr       */
+/*   Updated: 2019/10/31 13:19:10 by froussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,7 @@ static int	give_line(char **str, char **line)
 
 	s = *str;
 	if (!*str || !**str)
-	{
-		if (!(*line = ft_strdup("\0")))
-			return (free_all(str));
-	}
+		*line = ft_strdup("\0");
 	else
 	{
 		len = ft_strclen(*str, '\n');
