@@ -6,7 +6,7 @@
 /*   By: froussel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 14:53:17 by froussel          #+#    #+#             */
-/*   Updated: 2019/11/01 17:58:34 by froussel         ###   ########.fr       */
+/*   Updated: 2019/11/03 16:44:12 by froussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	give_line(char **str, char **line)
 
 int			get_next_line(int fd, char **line)
 {
-	static char	*str;
+	static char	*str = NULL;
 	char		buff[BUFFER_SIZE + 1];
 	char		*new_str;
 	int			i;
