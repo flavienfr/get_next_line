@@ -64,7 +64,7 @@ static int	give_line(char **str, char **line)
 
 int			get_next_line(int fd, char **line)
 {
-	static char	*str;
+	static char	*str = NULL;
 	char		buff[BUFFER_SIZE + 1];
 	char		*new_str;
 	ssize_t			i;
