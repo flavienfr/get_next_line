@@ -33,16 +33,17 @@ static int	is_line(char *str)
 	return (-1);
 }
 
-static int	give_line(char **str, char **line)
+static int	give_line(char **str, char **line, int ret)
 {
 	char	*s;
 	int		len;
-	int 	ret;
 
 	s = NULL;
-	ret = 0;
 	if (!*str || !**str)
-		*line = ft_strdup("\0");
+	{
+		if (!(*line = ft_strdup("\0")))
+			return (free_all(str));
+	}
 	else if ((len = is_line(*str)) >= 0)
 	{
 		if (!(*line = ft_substr(*str, 0, len)))
@@ -55,7 +56,6 @@ static int	give_line(char **str, char **line)
 	{
 		if (!(*line = ft_substr(*str, 0, ft_strlen(*str))))
 			return (free_all(str));
-		ret = 0;
 	}
 	free_all(str);
 	*str = s;
@@ -64,7 +64,7 @@ static int	give_line(char **str, char **line)
 
 int			get_next_line(int fd, char **line)
 {
-	static char	*str = NULL;
+	static char	*str;
 	char		buff[BUFFER_SIZE + 1];
 	char		*new_str;
 	ssize_t			i;
@@ -76,13 +76,12 @@ int			get_next_line(int fd, char **line)
 		buff[i] = '\0';
 		if (!(new_str = ft_strjoin(str, buff)))
 			return (free_all(&str));
-		if (str)
-			free(str);
+		free_all(&str);
 		str = new_str;
 		if (is_line(str) >= 0)
 			break ;
 	}
 	if (i < 0)
 		return (free_all(&str));
-	return (give_line(&str, line));
+	return (give_line(&str, line, 0));
 }
