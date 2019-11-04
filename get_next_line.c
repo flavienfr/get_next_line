@@ -22,52 +22,52 @@ static int	free_all(char **str)
 	return (-1);
 }
 
-static int	ret(char *s, size_t len)
-{
-	if (s[len] == '\n')
-	{
-		free(s);
-		return (1);
-	}
-	free(s);
-	return (0);
-}
-
 static int	is_line(char *str)
 {
-	while (*str)
-		if (*str++ == '\n')
-			return (1);
-	return (0);
+	int		i;
+
+	i = -1;
+	while (str[++i])
+		if (str[i] == '\n')
+			return (i);
+	return (-1);
 }
 
 static int	give_line(char **str, char **line)
 {
 	char	*s;
-	size_t	len;
+	int		len;
+	int 	ret;
 
-	s = *str;
+	s = NULL;
+	ret = 0;
 	if (!*str || !**str)
 		*line = ft_strdup("\0");
+	else if ((len = is_line(*str)) >= 0)
+	{
+		if (!(*line = ft_substr(*str, 0, len)))
+			return (free_all(str));
+		if (!(s = ft_substr(*str, len + 1, ft_strlen(*str))))
+			return (free_all(str));
+		ret = 1;
+	}
 	else
 	{
-		len = ft_strclen(*str, '\n');
-		if (!(*line = ft_substr(*str, 0, len)))
-			return (free_all(&s));
-		if (!(*str = ft_substr(*str, len + 1, ft_strlen(*str))))
-			return (free_all(&s));
-		return (ret(s, len));
+		if (!(*line = ft_substr(*str, 0, ft_strlen(*str))))
+			return (free_all(str));
+		ret = 0;
 	}
 	free_all(str);
-	return (0);
+	*str = s;
+	return (ret);
 }
 
 int			get_next_line(int fd, char **line)
 {
-	static char	*str = NULL;
+	static char	*str;
 	char		buff[BUFFER_SIZE + 1];
 	char		*new_str;
-	int			i;
+	ssize_t			i;
 
 	if (!line || fd < 0)
 		return (free_all(&str));
@@ -79,7 +79,7 @@ int			get_next_line(int fd, char **line)
 		if (str)
 			free(str);
 		str = new_str;
-		if (is_line(str))
+		if (is_line(str) >= 0)
 			break ;
 	}
 	if (i < 0)

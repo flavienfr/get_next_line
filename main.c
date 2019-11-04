@@ -4,25 +4,47 @@
 int		main(int ac, char **av)
 {
 	int 	fd;
+	int		fd2;
 	int i;
-	char 	*line;
+	char 	**line;
 
 	ac = 0;
 	//(void)av;
-	//line = (char*)malloc(sizeof(char));
-	fd = open(av[1], O_RDONLY);
+	line = (char**)malloc(sizeof(char *));
+	//line = NULL;
+	/*fd = open(av[1], O_RDONLY);
 
 	//fd = 0;
 	while ((i = get_next_line(fd, &line)) > 0)
 	{
 		printf("%-5d|%s|\n", i, line);
 		free(line);
+	}*/
+
+//*line = NULL;
+//free(line);
+	fd = open(av[1], O_RDONLY);
+	i = get_next_line(fd, line);
+	printf("%-5d|%s|\n", i, *line);
+	if (*line)
+	{
+		free(*line);
+		*line = NULL;
 	}
-	printf("%-5d|%s|\n", i, line);
+	close(fd);
+
+	fd2 = open(av[2], O_RDONLY);
+	i = get_next_line(fd2, line);
+	printf("%-5d|%s|\n", i, *line);
+	if (*line)
+	{
+		free(*line);
+		*line = NULL;
+	}
+	close(fd2);
+
 	free(line);
 
-while (1)
-	;
 	/*
 	i = get_next_line(fd, &line); 
 	printf("%-5d|%s|\n", i, line);
