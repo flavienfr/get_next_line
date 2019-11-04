@@ -6,7 +6,7 @@
 /*   By: froussel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 14:53:17 by froussel          #+#    #+#             */
-/*   Updated: 2019/11/03 16:44:12 by froussel         ###   ########.fr       */
+/*   Updated: 2019/11/04 18:04:33 by froussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int			get_next_line(int fd, char **line)
 	static char	*str;
 	char		buff[BUFFER_SIZE + 1];
 	char		*new_str;
-	ssize_t			i;
+	ssize_t		i;
 
 	if (!line || fd < 0)
 		return (free_all(&str));
