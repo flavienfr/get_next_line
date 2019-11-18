@@ -76,7 +76,8 @@ int			get_next_line(int fd, char **line)
 		buff[i] = '\0';
 		if (!(new_str = ft_strjoin(str, buff)))
 			return (free_all(&str));
-		free_all(&str);
+		if (str)
+			free_all(&str);
 		str = new_str;
 		if (is_line(str) >= 0)
 			break ;
